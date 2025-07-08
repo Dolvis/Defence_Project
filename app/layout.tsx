@@ -2,11 +2,14 @@ import { ClerkProvider, SignIn } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Outfit } from "next/font/google";
 import { SignedIn } from "@clerk/nextjs";
 import { SignedOut } from "@clerk/nextjs";
 import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import './globals.css'
 import NavBar from "./components/NavBar";
+
+const inter = Outfit({ subsets: ['latin'] })
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,17 +35,23 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
-          <header>
+          <header className="">
             <SignedOut>
-              <SignInButton />
-              <SignUpButton>
-                <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                  Sign Up
+              <div className="flex justify-end items-center p-4 gap-4 h-16 ">
+                <SignInButton>
+                <button className=''>
+                  Sign in
                 </button>
-              </SignUpButton>
+                </SignInButton>
+                <SignUpButton>
+                  <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer justify-item-center">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </div>
             </SignedOut>
             <SignedIn>
-              <NavBar/>
+              <NavBar />
             </SignedIn>
           </header>
           {children}

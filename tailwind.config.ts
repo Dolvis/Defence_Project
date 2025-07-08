@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
-
+import "tailwindcss";
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,7 +14,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
 
 export default config
