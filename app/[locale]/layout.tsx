@@ -7,7 +7,7 @@ import { SignedIn } from "@clerk/nextjs";
 import { SignedOut } from "@clerk/nextjs";
 import { SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import './globals.css'
-import NavBar from "./components/NavBar";
+import NavBar from "../components/NavBar";
 
 const inter = Outfit({ subsets: ['latin'] })
 

@@ -4,27 +4,33 @@ import { FaGasPump } from 'react-icons/fa';
 import { MdAirlineSeatReclineNormal } from 'react-icons/md';
 import { PiSteeringWheelFill } from 'react-icons/pi';
 
-function CarCard(props: any) {
+type Props = {
+    car: any
+    isActive: boolean
+    onClick: () => void
+}
 
-    const [showButton, setShowButton] = useState(false);
+function CarCard({ car, isActive, onClick }: Props) {
 
-    const [car, setCar] = useState(props.car)
     return (
-        <div className='group bg-gray-50 p-4 sm:p-2 rounded-2xl
+        <div
+            onClick={onClick}
+            className='group bg-gray-50 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl p-2 bg-base-100 shadow-md sm:p-4 rounded-2xl text-sm sm:text-base
         hover:bg-white hover:border-[1px] cursor-pointer
-        duration-200 border-blue-500 ' onClick={() => setShowButton(prev => !prev)} >
-            <h2 className='text-[20px] font-medium mb-4'>{car.name}</h2>
-            <h2 className='text-[28px] font-bold mb-4'>
-                <span className='text-[12px] font-light'>$</span>
+        duration-200 border-blue-500 '>
+            
+            <h2 className='text-[20px] font-medium text-black mb-4'>{car.name}</h2>
+            <h2 className='text-[28px] font-bold mb-4 text-black'>
+                <span className='text-[12px] font-light text-black'>$</span>
                 {car.price}
-                <span className='text-[12px] font-light'> /day</span>
+                <span className='text-[12px] font-light text-black'> /day</span>
             </h2>
             <Image src={car.image?.url}
                 alt={car.name}
                 width={220}
                 height={200}
                 className='w-[250px] h-[150px] mb-6 object-contain' />
-            {!showButton && (
+            {!isActive && (
                 <div className='flex items-flex justify-around group-hover:hidden '>
                     <div className='text-center text-gray-500'>
                         <PiSteeringWheelFill className='w-full mx-auto text-[22px] mb-2' />
@@ -40,8 +46,8 @@ function CarCard(props: any) {
                     </div>
                 </div>
             )}
-            <button className={`${showButton ? 'flex' : 'hidden group-hover:flex'}
-                    items-center p-5 justify-between w-full py-3 mt-1 rounded-lg text-white bg-blue-500`} > Rent Now
+            <button className={`${isActive ? 'flex' : 'hidden group-hover:flex'
+                } items-center p-5 justify-between w-full py-3 mt-1 rounded-lg text-white bg-blue-500 transition`} > Rent Now
                 <span className="bg-blue-600 p-1 rounded" >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -60,8 +66,8 @@ function CarCard(props: any) {
             </button >
         </div >
 
-    )
+    );
 }
 
 
-export default CarCard
+export default CarCard;

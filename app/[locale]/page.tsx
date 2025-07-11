@@ -1,11 +1,11 @@
 "use client"
 import Image from "next/image";
-import Hero from "./components/Home/Hero";
-import Searchinput from "./components/Home/Searchinput";
-import CarsFilterOption from "./components/Home/CarsFilterOption";
+import Hero from "../components/Home/Hero";
+import Searchinput from "../components/Home/Searchinput";
+import CarsFilterOption from "../components/Home/CarsFilterOption";
 import { getCarsList } from "@/services";
 import { useEffect, useState } from "react";
-import CarsList from "./components/Home/CarsList";
+import CarsList from "../components/Home/CarsList";
 
 export default function Home() {
 

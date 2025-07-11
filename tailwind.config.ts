@@ -1,11 +1,13 @@
+// tailwind.config.ts
 import type { Config } from 'tailwindcss'
-import "tailwindcss";
+
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'media',
   theme: {
     extend: {
       backgroundImage: {
@@ -15,6 +17,10 @@ const config: Config = {
     },
   },
   plugins: [require("daisyui")],
+  // @ts-expect-error - daisyui is added by plugin and not typed by default
+  daisyui: {
+    themes: ["light", "dark"],
+  },
 }
 
 export default config
