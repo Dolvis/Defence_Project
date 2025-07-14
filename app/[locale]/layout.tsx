@@ -26,14 +26,12 @@ export const metadata: Metadata = {
   description: 'Book Cars Easily',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
+export default function RootLayout({children,}: Readonly<{
+children: React.ReactNode
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="fr">
         <body>
           <header className="">
             <SignedOut>
