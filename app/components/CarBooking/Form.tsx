@@ -1,4 +1,4 @@
-import { getStoreLocations } from '@/services'
+import { createBooking, getStoreLocations } from '@/services'
 import React, { useEffect, useState } from 'react'
 
 function Form({ car, onClose }: any) {
@@ -6,15 +6,28 @@ function Form({ car, onClose }: any) {
     const [storeLocation, setStoreLocation] = useState<any>([]);
     const [formValue,setFormValue]=useState({
         location: '',
-        pickupDate: '',
+        pickUpDate: '',
         dropOffDate: '',
-        pickupTime: '',
+        pickUpTime: '',
         dropOffTime: '',
         contactNumber: '',
+        userName:'Kameni Dolvis',
+        carId: {connect: {id: ""}}
     })
     useEffect(() => {
         getStoreLocation_();
     }, [])
+
+    useEffect(()=>{
+        if(car)
+        {
+            setFormValue({
+                ...formValue,
+                carId: {connect:
+                {id:car.id}}
+            });
+        }
+    },[car])
     const getStoreLocation_ = async () => {
         const resp: any = await getStoreLocations();
         console.log(resp);
@@ -28,8 +41,10 @@ function Form({ car, onClose }: any) {
         });
     }
 
-    const handleSubmit=()=>{
+    const handleSubmit=async()=>{
         console.log(formValue)
+        const resp=await createBooking(formValue);
+        console.log(resp)
     }
 
     return (
@@ -60,7 +75,7 @@ function Form({ car, onClose }: any) {
                         <input
                             type="date"
                             placeholder='Type here'
-                            name="pickupDate"
+                            name="pickUpDate"
                             onChange={handleChange}
                             className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-400"
                         />
@@ -84,7 +99,7 @@ function Form({ car, onClose }: any) {
                         <input
                             type="time"
                             placeholder='Type here'
-                            name="pickupTime"
+                            name="pickUpTime"
                             onChange={handleChange}
                             className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-400"
                         />
