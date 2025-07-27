@@ -7,6 +7,7 @@ import { getCarsList } from "@/services";
 import { useEffect, useState } from "react";
 import CarsList from "../components/Home/CarsList";
 
+
 export default function Home() {
 
   const [carsList, setCarslist] = useState<any>([])

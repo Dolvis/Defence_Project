@@ -1,33 +1,34 @@
 import { createBooking, getStoreLocations } from '@/services'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
+
 
 function Form({ car, onClose }: any) {
 
     const [storeLocation, setStoreLocation] = useState<any>([]);
-    const [formValue,setFormValue]=useState({
-        location: '',
-        pickUpDate: '',
-        dropOffDate: '',
-        pickUpTime: '',
-        dropOffTime: '',
-        contactNumber: '',
-        userName:'Kameni Dolvis',
-        carId: {connect: {id: ""}}
+    const [formValue, setFormValue] = useState({
+        location: "",
+        pickUpDate: "",
+        dropOffDate: "",
+        pickUpTime: "",
+        dropOffTime: "",
+        contactNumber: "",
+        userName: "",
+        carId: "cmcv1dhnc8afh06l7oibpy6l4"
+
     })
     useEffect(() => {
         getStoreLocation_();
     }, [])
 
-    useEffect(()=>{
-        if(car)
-        {
-            setFormValue({
-                ...formValue,
-                carId: {connect:
-                {id:car.id}}
-            });
+    useEffect(() => {
+        if (car) {
+            setFormValue((prev) => ({
+                ...prev,
+                carId: car.id
+            }));
         }
-    },[car])
+    }, [car])
     const getStoreLocation_ = async () => {
         const resp: any = await getStoreLocations();
         console.log(resp);
@@ -37,15 +38,26 @@ function Form({ car, onClose }: any) {
     const handleChange = (event: any) => {
         setFormValue({
             ...formValue,
-            [event.target.name]:event.target.value
+            [event.target.name]: event.target.value
         });
     }
 
-    const handleSubmit=async()=>{
-        console.log(formValue)
-        const resp=await createBooking(formValue);
-        console.log(resp)
-    }
+    const handleSubmit = async () => {
+        try {
+            const resp = await createBooking(formValue);
+    
+            if (resp?.createBooking?.id) {
+                toast.success("Booking created successfully!");
+                onClose(); // optional: close modal after success
+            } else {
+                toast.error("Booking failed. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error creating booking:", error);
+            toast.error("Something went wrong. Please try again later.");
+        }
+    };
+    
 
     return (
         <div>
@@ -53,8 +65,8 @@ function Form({ car, onClose }: any) {
                 {/* Pick Up Location */}
                 <div className="">
                     <label className="block text-sm font-medium text-gray-600 mb-1">Pick Up Location</label>
-                    <select className="w-full mb-4 p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-400" name="location" 
-                    value={formValue.location} onChange={handleChange}>
+                    <select className="w-full mb-4 p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-400" name="location"
+                        value={formValue.location} onChange={handleChange}>
                         <option value="" disabled>Pickup Location?</option>
                         {storeLocation && storeLocation.map((loc: any, index: number) => (
                             <option key={index} value={loc.addresse}>{loc.addresse}</option>
@@ -127,23 +139,23 @@ function Form({ car, onClose }: any) {
                         className="w-full p-3 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-400"
                     />
                 </div>
-                
+
             </form>
             <div className="p-4 modal-action border-t flex justify-end gap-4">
-                    <button
+                <button
                     type="button"
-                        onClick={onClose}
-                        className="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-600 transition"
-                    >
-                        CLOSE
-                    </button>
-                    <button
-                    onClick={handleSubmit} 
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-800 transition"
-                        >
-                        SAVE
-                    </button>
-                </div>
+                    onClick={onClose}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-600 transition"
+                >
+                    CLOSE
+                </button>
+                <button
+                    onClick={handleSubmit}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-800 transition"
+                >
+                    SAVE
+                </button>
+            </div>
         </div>
     )
 }
